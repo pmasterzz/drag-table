@@ -1,0 +1,25 @@
+
+<table class="table" cdkDropList (cdkDropListDropped)="drop($event)">
+  <tr>
+    <th>Title</th>
+    <th *ngFor="let column of columns">
+      {{ column }}
+    </th>
+  </tr>
+
+  <tbody cdkDropListGroup>
+  <tr *ngFor="let row of rows; let rowIndex = index">
+    <td>
+      {{ row.title }}
+    </td>
+    <td id="{{rowIndex}}-{{column}}" *ngFor="let column of columns; let index = index" cdkDropList (cdkDropListDropped)="dropItem($event)">
+      <ng-container *ngIf="row.items && row.items[column]">
+        <div class="item border border-danger" *ngFor="let item of row.items[column]" [cdkDragData]="item"
+             cdkDrag>
+          {{ item.name }}
+        </div>
+      </ng-container>
+    </td>
+  </tr>
+  </tbody>
+</table>
